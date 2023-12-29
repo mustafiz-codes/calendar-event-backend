@@ -1,0 +1,57 @@
+# Environment variables
+
+.env
+
+# Dependency directory
+
+node_modules/
+
+# Build output directory
+
+dist/
+
+# Logs
+
+\*.log
+
+# Runtime data
+
+pids
+_.pid
+_.seed
+\*.pid.lock
+
+# Optional npm cache directory
+
+.npm
+
+# Optional eslint cache
+
+.eslintcache
+
+# TypeScript cache
+
+\*.tsbuildinfo
+
+# Yarn Integrity file
+
+.yarn-integrity
+
+# parcel-bundler cache
+
+.cache
+.parcel-cache
+
+# coverage directory used by tools like istanbul
+
+coverage/
+
+# nyc test coverage
+
+.nyc_output
+
+# IDE/Editors
+
+.vscode/
+.idea/
+\*.swp

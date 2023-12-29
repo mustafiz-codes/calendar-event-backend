@@ -1,6 +1,9 @@
 import { Document, Schema, model } from "mongoose";
 
-interface IEvent extends Document {
+// Define the IEvent interface
+export interface IEvent {
+  _id: string;
+  recurringEventId?: string;
   title: string;
   description?: string;
   notes?: string;
@@ -12,6 +15,7 @@ interface IEvent extends Document {
   repeat: "none" | "daily" | "weekly" | "monthly" | "yearly";
   repeatCycle?: number;
 }
+
 const eventSchema = new Schema<IEvent>({
   _id: { type: String, required: true },
   title: { type: String, required: true },
