@@ -16,7 +16,24 @@ const eventSchema = new Schema<IEvent>({
     enum: ["none", "daily", "weekly", "monthly", "yearly"],
     default: "none",
   },
-  repeatCycle: { type: Number, required: false }, // Used for biweekly, etc.
+  repeatCycle: {
+    type: String,
+    enum: ["none", "daily", "biweekly", "weekly", "monthly", "yearly"],
+    default: "none",
+  }, // Used for biweekly, etc.
+});
+
+// Pre-save hook to format startDate and endDate
+eventSchema.pre<IEvent>("save", function (next) {
+  if (this.startDate) {
+    // Ensuring that the date is set at the start of the day in UTC
+    this.startDate = new Date(this.startDate.setUTCHours(0, 0, 0, 0));
+  }
+  if (this.endDate) {
+    // Similarly for endDate
+    this.endDate = new Date(this.endDate.setUTCHours(0, 0, 0, 0));
+  }
+  next();
 });
 
 export default eventSchema;

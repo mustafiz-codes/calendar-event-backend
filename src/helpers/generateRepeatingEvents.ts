@@ -3,58 +3,56 @@ import { IEvent } from "../db/event.interface";
 
 export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   let events: IEvent[] = [];
-  let nextDate = new Date(eventData.startDate);
-  const endDate = new Date(eventData.startDate);
-  endDate.setFullYear(endDate.getFullYear() + 1); // 1 year from start date
+  let nextStartDate = new Date(eventData.startDate);
+  let nextEndDate = eventData.endDate ? new Date(eventData.endDate) : null;
+  const duration = nextEndDate
+    ? nextEndDate.getTime() - nextStartDate.getTime()
+    : 0;
 
-  // Destructure only the necessary fields from eventData
-  const {
-    title,
-    description,
-    notes,
-    isFullDay,
-    startTime,
-    endTime,
-    repeat,
-    repeatCycle,
-  } = eventData;
+  // Set repeatEndDate to the end of the current year
+  const repeatEndDate = new Date(nextStartDate.getFullYear(), 11, 31); // December 31st of current year
 
-  const recurringEventId = eventData._id;
-
-  while (nextDate < endDate) {
-    nextDate = new Date(nextDate); // Clone date to avoid mutation
-    // Calculate the next occurrence date
-    switch (eventData.repeat) {
+  // Function to increment date based on repeatCycle
+  const incrementDate = (date, repeatCycle) => {
+    switch (repeatCycle) {
       case "daily":
-        nextDate.setDate(nextDate.getDate() + 1);
+        date.setDate(date.getDate() + 1);
+        break;
+      case "biweekly":
+        date.setDate(date.getDate() + 14); // 2 weeks
         break;
       case "weekly":
-        nextDate.setDate(nextDate.getDate() + 7);
+        date.setDate(date.getDate() + 7);
         break;
       case "monthly":
-        nextDate.setMonth(nextDate.getMonth() + 1);
+        date.setMonth(date.getMonth() + 1);
         break;
       case "yearly":
-        nextDate.setFullYear(nextDate.getFullYear() + 1);
+        date.setFullYear(date.getFullYear() + 1);
         break;
     }
+  };
 
-    if (nextDate < endDate) {
-      const newEvent: IEvent = {
+  while (nextStartDate < repeatEndDate) {
+    incrementDate(nextStartDate, eventData.repeatCycle);
+    let adjustedEndDate = nextEndDate
+      ? new Date(nextStartDate.getTime() + duration)
+      : null;
+
+    if (nextStartDate < repeatEndDate) {
+      events.push({
         _id: uuidv4(),
-        recurringEventId,
-        title,
-        description,
-        notes,
-        startDate: nextDate,
-        endDate: eventData.endDate, // Or calculate based on repeat pattern
-        isFullDay,
-        startTime,
-        endTime,
-        repeat,
-        repeatCycle,
-      };
-      events.push(newEvent);
+        title: eventData.title,
+        description: eventData.description,
+        notes: eventData.notes,
+        startDate: new Date(nextStartDate.getTime()),
+        endDate: adjustedEndDate,
+        isFullDay: eventData.isFullDay,
+        startTime: eventData.startTime,
+        endTime: eventData.endTime,
+        repeat: eventData.repeat,
+        repeatCycle: eventData.repeatCycle,
+      });
     }
   }
 

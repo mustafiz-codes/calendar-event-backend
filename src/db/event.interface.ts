@@ -10,5 +10,5 @@ export interface IEvent {
   startTime?: string;
   endTime?: string;
   repeat: "none" | "daily" | "weekly" | "monthly" | "yearly";
-  repeatCycle?: number;
+  repeatCycle?: "none" | "daily" | "biweekly" | "weekly" | "monthly" | "yearly";
 }
