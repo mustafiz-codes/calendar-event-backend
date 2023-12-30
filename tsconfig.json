@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2018",
     "module": "commonjs",
-    "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [
+    "src/**/*",
+    "src/tests/**/*" // Ensure this line or similar is present
+  ],
+  "exclude": [
+    "node_modules"
+    // ... you may exclude other directories if needed ...
+  ]
 }
