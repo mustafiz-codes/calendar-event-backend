@@ -4,7 +4,7 @@ export interface IEvent {
   title: string;
   description?: string;
   notes?: string;
-  startDate: Date;
+  startDate: Date; 
   endDate?: Date;
   isFullDay: boolean;
   startTime?: string;

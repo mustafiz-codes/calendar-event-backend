@@ -3,6 +3,10 @@ import { IEvent } from "./event.interface";
 
 const eventSchema = new Schema<IEvent>({
   _id: { type: String, required: true },
+  recurringEventId: {
+    type: String,
+    required: false,
+  },
   title: { type: String, required: true },
   description: { type: String, required: false },
   notes: { type: String, required: false },

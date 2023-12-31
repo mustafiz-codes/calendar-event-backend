@@ -13,10 +13,9 @@ import {
 const router = express.Router();
 
 router.post("/", createEvent);
-
 router.get("/", getAllEvents);
-router.get("/:id", getEventById);
 router.get("/range", getEventsByRange);
+router.get("/:id", getEventById);
 
 router.put("/:id", updateEventById);
 router.put("/:recurringEventId", updateRecurringEvents);

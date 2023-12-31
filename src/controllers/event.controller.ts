@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import * as EventService from "../services/event.service";
+import { IEvent } from "../db/event.interface";
+import EventModel from "../models/event.model";
 
 export const createEvent = async (req: Request, res: Response) => {
   try {

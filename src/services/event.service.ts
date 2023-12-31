@@ -10,12 +10,17 @@ export const createEventService = async (eventData: IEvent) => {
   const newEvent = new EventModel(eventData);
   await newEvent.save();
 
+  let response = {
+    mainEvent: newEvent,
+    additionalEvents: [],
+  };
+
   if (eventData.repeat !== "none") {
-    const additionalEvents = generateRepeatingEvents(eventData);
-    await EventModel.insertMany(additionalEvents);
+    response.additionalEvents = generateRepeatingEvents(eventData);
+    await EventModel.insertMany(response.additionalEvents);
   }
 
-  return newEvent;
+  return response; // Now returns an object with the main event and any additional events
 };
 
 // Get all events

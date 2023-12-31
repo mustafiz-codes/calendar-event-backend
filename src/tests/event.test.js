@@ -21,7 +21,6 @@ describe("Event API End-to-End Tests", () => {
         "monthly",
         "yearly",
       ]),
-      // ...other event fields
     };
 
     const response = await chai.request(app).post("/events").send(fakeEvent);
