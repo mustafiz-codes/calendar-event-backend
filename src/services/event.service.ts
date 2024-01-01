@@ -7,20 +7,16 @@ import EventModel from "../models/event.model";
 
 export const createEventService = async (eventData: IEvent) => {
   eventData._id = uuidv4();
-  const newEvent = new EventModel(eventData);
-  await newEvent.save();
-
-  let response = {
-    mainEvent: newEvent,
-    additionalEvents: [],
-  };
 
   if (eventData.repeat !== "none") {
-    response.additionalEvents = generateRepeatingEvents(eventData);
-    await EventModel.insertMany(response.additionalEvents);
+    const events = generateRepeatingEvents(eventData);
+    const allEvents = await EventModel.insertMany(events);
+
+    return allEvents;
   }
 
-  return response; // Now returns an object with the main event and any additional events
+  const newEvent = new EventModel(eventData);
+  return await newEvent.save(); // Now returns an object with the main event and any additional events
 };
 
 // Get all events
@@ -48,6 +44,7 @@ export const deleteEventByIdService = async (
   id: string
 ): Promise<IEvent | null> => {
   // Perform the deletion operation
+  console.log("id", id);
   const result = await EventModel.findByIdAndDelete(id);
 
   // Check if a document was found and deleted

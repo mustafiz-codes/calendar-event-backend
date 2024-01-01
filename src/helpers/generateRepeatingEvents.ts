@@ -4,9 +4,10 @@ import { IEvent } from "../db/event.interface";
 export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   // Validation for date types
 
-  console.log("eventData", eventData);
   let events: IEvent[] = [];
   let recurringEventId = uuidv4();
+
+  events.push({ ...eventData, recurringEventId: recurringEventId });
 
   let nextStartDate = new Date(eventData.startDate);
   if (isNaN(nextStartDate.getTime())) {
@@ -117,6 +118,6 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   if (idSet.size !== events.length) {
     console.error("Duplicate IDs detected in generated events.");
   }
-  console.log("events", events);
+  console.log({ events });
   return events;
 }
