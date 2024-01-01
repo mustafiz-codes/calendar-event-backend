@@ -6,6 +6,7 @@ import { connectDatabase } from "./db/connection"; // Import the connection func
 import eventsRouter from "./routes/event.routes";
 
 const app = express();
+
 const port = process.env.PORT || 5000;
 
 app.use(cors());
@@ -17,9 +18,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/events", eventsRouter);
-
-// Export the app for use in other files (such as tests)
-export { app };
 
 // Can also export the server if we want to control the server in your tests
 const server = app
@@ -33,3 +31,4 @@ const server = app
 
 // Optionally export the server
 export { server };
+module.exports = app;

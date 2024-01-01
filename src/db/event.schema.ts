@@ -21,9 +21,8 @@ const eventSchema = new Schema<IEvent>({
     default: "none",
   },
   repeatCycle: {
-    type: String,
-    enum: ["none", "daily", "biweekly", "weekly", "monthly", "yearly"],
-    default: "none",
+    type: Number,
+    default: 0,
   }, // Used for biweekly, etc.
 });
 

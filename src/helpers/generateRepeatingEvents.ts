@@ -3,11 +3,8 @@ import { IEvent } from "../db/event.interface";
 
 export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   // Validation for date types
-
   let events: IEvent[] = [];
   let recurringEventId = uuidv4();
-
-  events.push({ ...eventData, recurringEventId: recurringEventId });
 
   let nextStartDate = new Date(eventData.startDate);
   if (isNaN(nextStartDate.getTime())) {
@@ -86,31 +83,21 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   }
 
   while (nextStartDate < repeatEndDate) {
-    if (eventData.repeat !== "none") {
-      // Increment the date before pushing the event for repeated events
-      incrementDate(nextStartDate, eventData.repeat);
+    let eventEndDate = new Date(nextStartDate.getTime() + duration);
+    let eventId = uuidv4();
+    events.push({
+      ...eventData,
+      _id: eventId,
+      startDate: new Date(nextStartDate),
+      endDate: eventEndDate,
+      repeatCycle: 0,
+      recurringEventId: recurringEventId,
+    });
 
-      let eventEndDate = new Date(nextStartDate.getTime() + duration);
-      let eventId = uuidv4();
-      events.push({
-        ...eventData,
-        _id: eventId,
-        startDate: new Date(nextStartDate),
-        endDate: eventEndDate,
-        repeatCycle: "none",
-        recurringEventId: recurringEventId,
-      });
+    if (eventData.repeat !== "none") {
+      // Increment the date for repeated events
+      incrementDate(nextStartDate, eventData.repeat);
     } else {
-      // For non-repeating events, push the event without incrementing the date
-      let eventId = uuidv4();
-      events.push({
-        ...eventData,
-        _id: eventId,
-        startDate: nextStartDate,
-        endDate: nextEndDate,
-        repeatCycle: "none",
-        recurringEventId: recurringEventId,
-      });
       break; // Exit the loop as it's a non-repeating event
     }
   }

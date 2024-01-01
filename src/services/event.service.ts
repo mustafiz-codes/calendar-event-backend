@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { generateRepeatingEvents } from "../../src/helpers/generateRepeatingEvents";
-
 import { IEvent } from "../db/event.interface";
 import EventModel from "../models/event.model";
 
@@ -83,4 +82,9 @@ export const updateRecurringEventsService = async (
     { $set: updateData },
     { new: true }
   );
+};
+
+export const deleteAllEvents = async (): Promise<{ deletedCount?: number }> => {
+  const result = await EventModel.deleteMany({});
+  return { deletedCount: result.deletedCount };
 };

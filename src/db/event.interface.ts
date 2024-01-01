@@ -4,11 +4,11 @@ export interface IEvent {
   title: string;
   description?: string;
   notes?: string;
-  startDate: Date; 
+  startDate: Date;
   endDate?: Date;
   isFullDay: boolean;
   startTime?: string;
   endTime?: string;
   repeat: "none" | "daily" | "weekly" | "monthly" | "yearly";
-  repeatCycle?: "none" | "daily" | "biweekly" | "weekly" | "monthly" | "yearly";
+  repeatCycle?: number;
 }
