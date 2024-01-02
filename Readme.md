@@ -1,3 +1,16 @@
+def add_numbers(a, b):
+"""
+Adds two numbers together and returns the result.
+
+    Parameters:
+    a (int): The first number.
+    b (int): The second number.
+
+    Returns:
+    int: The sum of the two numbers.
+    """
+    return a + b
+
 ## Calendar Event Backend
 
 This project is a backend service for a calendar event application. It provides API endpoints to create, read, update, and delete calendar events.
@@ -53,6 +66,26 @@ The server should now be running and listening for API requests on **http://loca
 - [Express](https://expressjs.com/) - The web framework used
 - [MongoDB](https://www.mongodb.com/) - The database used
 - [Node.js](https://nodejs.org/) - The runtime environment used
+
+## **API Endpoints**
+
+# API Endpoints
+
+- `POST /events`: Create a new event.
+- `GET /`: Get all events.
+- `GET /events/:id`: Get a specific event by its ID.
+- `PUT /events/:id`: Update an event by its ID.
+- `DELETE /events/:id`: Delete an event by its ID.
+- `GET /range`: Get events within a specified range.
+
+# Router Handlers
+
+- `getEventsByRange`: Handler for the `GET /range` endpoint.
+- `getEventById`: Handler for the `GET /events/:id` endpoint.
+- `updateEventById`: Handler for the `PUT /events/:id` endpoint.
+- `updateRecurringEvents`: Handler for the `PUT /recurring/:recurringEventId` endpoint.
+- `deleteEventById`: Handler for the `DELETE /events/:id` endpoint.
+- `deleteRecurringEvents`: Handler for the `DELETE /recurring/:recurringEventId` endpoint.
 
 ## **Author**
 

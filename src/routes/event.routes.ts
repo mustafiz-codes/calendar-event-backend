@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createEvent); //issue
+router.post("/", createEvent);
 
 router.get("/", getAllEvents);
 router.get("/range", getEventsByRange);
