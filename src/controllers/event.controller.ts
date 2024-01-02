@@ -118,6 +118,9 @@ export const getEventsByRange = async (req: Request, res: Response) => {
 export const updateRecurringEvents = async (req: Request, res: Response) => {
   const { recurringEventId } = req.params;
   const updateData = req.body;
+
+  console.log("updateData", updateData);
+
   try {
     const result = await EventService.updateRecurringEventsService(
       recurringEventId,

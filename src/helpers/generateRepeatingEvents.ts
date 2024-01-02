@@ -6,6 +6,10 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   let events: IEvent[] = [];
   let recurringEventId = uuidv4();
 
+  if (!eventData.repeatCycle || eventData.repeatCycle < 1) {
+    eventData.repeatCycle = 1;
+  }
+
   let nextStartDate = new Date(eventData.startDate);
   if (isNaN(nextStartDate.getTime())) {
     throw new Error("Invalid startDate provided.");
@@ -23,13 +27,13 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
 
   const duration = nextEndDate.getTime() - nextStartDate.getTime();
 
-  const incrementDate = (date, repeat) => {
+  const incrementDate = (date, repeat, repeatCycle) => {
     switch (repeat) {
       case "daily":
-        date.setDate(date.getDate() + 1);
+        date.setDate(date.getDate() + 1 * repeatCycle);
         break;
       case "weekly":
-        date.setDate(date.getDate() + 7);
+        date.setDate(date.getDate() + 7 * repeatCycle);
         break;
       case "monthly": {
         let year = date.getFullYear();
@@ -51,20 +55,25 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
       case "yearly": {
         const day = date.getDate();
         const month = date.getMonth();
+
         const year = date.getFullYear();
+
+        // Add years based on repeatCycle
+        date.setFullYear(year + repeatCycle);
+
+        // Check for leap year if the date is February 29th
         const isLeapYear = (year) => new Date(year, 1, 29).getMonth() === 1;
 
-        if (month === 1 && day === 29 && !isLeapYear(year + 1)) {
-          date.setFullYear(year + 1, 1, 28);
-        } else {
-          date.setFullYear(year + 1);
+        // If the original date was February 29th, and the new year isn't a leap year,
+        // adjust the date to February 28th.
+        if (month === 1 && day === 29 && !isLeapYear(date.getFullYear())) {
+          date.setDate(28);
         }
         break;
       }
       case "none":
         // No action needed for 'none'
         break;
-
       default:
         throw new Error(`Unknown repeat interval: ${repeat}`);
     }
@@ -85,18 +94,19 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   while (nextStartDate < repeatEndDate) {
     let eventEndDate = new Date(nextStartDate.getTime() + duration);
     let eventId = uuidv4();
+
     events.push({
       ...eventData,
       _id: eventId,
       startDate: new Date(nextStartDate),
       endDate: eventEndDate,
-      repeatCycle: 0,
+      repeatCycle: eventData.repeatCycle,
       recurringEventId: recurringEventId,
     });
 
     if (eventData.repeat !== "none") {
       // Increment the date for repeated events
-      incrementDate(nextStartDate, eventData.repeat);
+      incrementDate(nextStartDate, eventData.repeat, eventData.repeatCycle);
     } else {
       break; // Exit the loop as it's a non-repeating event
     }
@@ -105,6 +115,6 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   if (idSet.size !== events.length) {
     console.error("Duplicate IDs detected in generated events.");
   }
-  console.log({ events });
+
   return events;
 }

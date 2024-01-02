@@ -43,7 +43,7 @@ export const deleteEventByIdService = async (
   id: string
 ): Promise<IEvent | null> => {
   // Perform the deletion operation
-  console.log("id", id);
+
   const result = await EventModel.findByIdAndDelete(id);
 
   // Check if a document was found and deleted

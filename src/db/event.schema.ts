@@ -22,7 +22,8 @@ const eventSchema = new Schema<IEvent>({
   },
   repeatCycle: {
     type: Number,
-    default: 0,
+    min: [1, "repeatCycle must be at least 1"], // Enforce minimum value of 1
+    default: 1,
   }, // Used for biweekly, etc.
 });
 
