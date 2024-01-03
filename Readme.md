@@ -45,7 +45,7 @@ To use Calendar Event Management System, follow these steps:
   - Start the Docker containers:
     `npm run docker:up`
   - The frontend will be available at `http://localhost:3000` and the backend at
-    `http://localhost:3001`.
+    `http://localhost:5000`.
 - To stop and remove Docker containers:
   `npm run docker:down`
 
