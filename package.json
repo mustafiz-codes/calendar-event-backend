@@ -6,8 +6,15 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon ./src/index.ts",
-    "dev": "nodemon --exec ts-node src/index.ts",
-    "test": "mocha -r ts-node/register ./src/tests/*.test.js --timeout 15000 --exit"
+    "dev": "nodemon --exec ts-node ./src/index.ts",
+    "install-all": "npm install && cd ./frontend && npm install",
+    "start-frontend": "cd ./frontend && npm start",
+    "docker:rebuild": "docker-compose build --no-cache",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down --remove-orphans",
+    "test": "mocha -r ts-node/register ./src/tests/*.test.js --timeout 15000 --exit",
+    "test:frontend": "cd ./frontend && npm test",
+    "test:all": "npm run test && npm run test:frontend"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +29,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.0.2",
     "sinon": "^17.0.1",
+    "swagger-ui-express": "^4.6.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

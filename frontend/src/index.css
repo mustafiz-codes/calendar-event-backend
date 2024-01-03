@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-theme: #0084c7; /* theme color */
+  --color-primary: #f4f4f4; /* primary color */
+  --color-secondary: #141414; /* secondary color */
+
+  --color-bg: #f4f4f4; /* Light background */
+  --color-text: #141414; /* Dark text */
+
+  /* Define other variables as needed */
+}
+
+/* Define dark theme variables */
+[data-theme="dark"] {
+  --color-bg: #141414; /* Dark background */
+  --color-text: #f4f4f4; /* Light text */
+
+  /* Define other variables as needed */
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.cs-btn-theme {
+  color: var(--color-bg);
+  background-color: var(--color-theme);
+}
+
+.topNav {
+  background-color: var(--color-bg);
+}

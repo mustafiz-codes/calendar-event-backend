@@ -1,0 +1,145 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "1.0.0",
+    "description": "API documentation for your backend service"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "CreateEventRequest": {
+        "type": "object",
+        "required": ["title", "startDate", "startTime", "isFullDay", "repeat"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the event"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date of the event"
+          },
+          "isFullDay": {
+            "type": "boolean",
+            "description": "Is the event full day"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of the event"
+          },
+          "repeat": {
+            "type": "string",
+            "enum": ["none", "daily", "weekly", "monthly", "yearly"],
+            "default": "none",
+            "description": "Repeat of the event"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Id of the resource",
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/events": {
+      "post": {
+        "summary": "Create Event",
+        "description": "Create a new event with the given details",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Events",
+        "description": "Get all events",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Event",
+        "description": "Update an event",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Event",
+        "description": "Delete an event",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "summary": "Get Event by event id",
+        "description": "Get an event by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    }
+  }
+}

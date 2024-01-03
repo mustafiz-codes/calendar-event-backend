@@ -2,8 +2,10 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import { connectDatabase } from "./db/connection"; // Import the connection function
+import { connectDatabase } from "./db/connection";
 import eventsRouter from "./routes/event.routes";
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./docs/swagger.json");
 
 const app = express();
 
@@ -18,6 +20,14 @@ app.get("/", (req, res) => {
 });
 
 app.use("/events", eventsRouter);
+
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerDocument, {
+    explorer: true,
+  })
+);
 
 // Can also export the server if we want to control the server in your tests
 const server = app

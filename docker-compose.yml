@@ -1,0 +1,21 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+  backend:
+    build:
+      context: . # The context is the root directory, where the backend's Dockerfile is located
+      dockerfile: Dockerfile # The Dockerfile for the backend is at the root of the project
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/usr/src/app
+    command: npm run dev

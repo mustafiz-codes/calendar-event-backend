@@ -1,26 +1,22 @@
-# Use a base image
-FROM node:14
+# Specify the base image
+FROM node:21-alpine
 
-# Set the working directory
+# Set the working directory inside the container
+WORKDIR /app
 
-WORKDIR /src/index
-
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
+
+RUN npm install -g nodemon
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code to the working directory
 COPY . .
 
-
-RUN npm install
-
-# Expose the port
+# Expose the port on which the application will run
 EXPOSE 5000
 
 # Start the application
-
-RUN npm install
-
+CMD ["npm", "start"]

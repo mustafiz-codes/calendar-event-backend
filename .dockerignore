@@ -1,0 +1,11 @@
+# Ignore all files and directories starting with a dot
+.*
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build artifacts
+dist/
+
+
+package-lock.json
