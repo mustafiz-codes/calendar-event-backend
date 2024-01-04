@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import { useCalendar } from "../context/CalendarContext";
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { useCalendar } from '../context/CalendarContext';
 import {
   Event,
   calculateHeight,
@@ -10,8 +10,8 @@ import {
   getWeekDates,
   times,
   to24HourTime,
-} from "../components/common/common";
-import ViewEvent from "../components/event/ViewEvent";
+} from '../components/common/common';
+import ViewEvent from '../components/event/ViewEvent';
 interface EventsByDateAndTime {
   [fullDate: string]: { [startTime: string]: Event[] };
 }
@@ -40,14 +40,14 @@ const Weekly: React.FC = () => {
         const newEventsByDateAndTime: EventsByDateAndTime = {};
 
         fetchedEvents.forEach((event: Event) => {
-          const formattedStartDate = event.startDate.split("T")[0];
+          const formattedStartDate = event.startDate.split('T')[0];
 
           if (event.endDate === null) {
             event.endDate = formattedStartDate;
           }
           const formattedEndDate = event.endDate
-            ? event.endDate.split("T")[0]
-            : "undefined";
+            ? event.endDate.split('T')[0]
+            : 'undefined';
 
           const range: string[] =
             formattedEndDate && formattedEndDate !== formattedStartDate
@@ -55,8 +55,8 @@ const Weekly: React.FC = () => {
               : [formattedStartDate];
 
           range.forEach((date, index, array) => {
-            const startTime = event.startTime || "00:00"; // Use event's start time
-            const endTime = event.endTime || "23:59"; // Use event's end time
+            const startTime = event.startTime || '00:00'; // Use event's start time
+            const endTime = event.endTime || '23:59'; // Use event's end time
 
             const timeSlot = `${to24HourTime(startTime)} - ${to24HourTime(
               endTime
@@ -183,15 +183,15 @@ const Weekly: React.FC = () => {
                       onClick={() => handleEventClick(event._id)}
                       className={`absolute bg-sky-600 text-white text-xs rounded`}
                       style={{
-                        top: calculateTop(event) + "px",
-                        height: calculateHeight(event) + "px",
+                        top: calculateTop(event) + 'px',
+                        height: calculateHeight(event) + 'px',
                         left: `${left}%`,
                         width: `${width}%`,
-                        margin: "1px",
+                        margin: '1px',
                       }}
                     >
-                      {event.title} ({event.startTime || "00:00"} -{" "}
-                      {event.endTime || "24:00"})
+                      {event.title} ({event.startTime || '00:00'} -{' '}
+                      {event.endTime || '24:00'})
                     </p>
                   );
                 })
@@ -202,10 +202,10 @@ const Weekly: React.FC = () => {
       </div>
 
       {modalContent &&
-        document.getElementById("modal-root") &&
+        document.getElementById('modal-root') &&
         ReactDOM.createPortal(
           modalContent,
-          document.getElementById("modal-root") as Element
+          document.getElementById('modal-root') as Element
         )}
     </>
   );

@@ -18,7 +18,7 @@ const generateCalendar = (selectedDate: Date): CalendarDay[] => {
 
   const currentDate = new Date();
 
-  const todayFormatted = currentDate.toISOString().split("T")[0];
+  const todayFormatted = currentDate.toISOString().split('T')[0];
 
   const daysInMonth = getDaysInMonth(
     selectedDate.getFullYear(),
@@ -45,10 +45,10 @@ const generateCalendar = (selectedDate: Date): CalendarDay[] => {
     const date = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), i);
     calendarDays.push({
       date: i,
-      isToday: date.toISOString().split("T")[0] === todayFormatted,
-      fullDate: date.toISOString().split("T")[0],
+      isToday: date.toISOString().split('T')[0] === todayFormatted,
+      fullDate: date.toISOString().split('T')[0],
       currentMonth: false,
-      day: date.toLocaleDateString("en-US", { weekday: "short" }),
+      day: date.toLocaleDateString('en-US', { weekday: 'short' }),
     });
   }
 
@@ -61,10 +61,10 @@ const generateCalendar = (selectedDate: Date): CalendarDay[] => {
     );
     calendarDays.push({
       date: i,
-      isToday: date.toISOString().split("T")[0] === todayFormatted,
-      fullDate: date.toISOString().split("T")[0],
+      isToday: date.toISOString().split('T')[0] === todayFormatted,
+      fullDate: date.toISOString().split('T')[0],
       currentMonth: true,
-      day: date.toLocaleDateString("en-US", { weekday: "short" }),
+      day: date.toLocaleDateString('en-US', { weekday: 'short' }),
     });
   }
 
@@ -78,10 +78,10 @@ const generateCalendar = (selectedDate: Date): CalendarDay[] => {
     const date = new Date(nextMonth.getFullYear(), nextMonth.getMonth(), i);
     calendarDays.push({
       date: i,
-      isToday: date.toISOString().split("T")[0] === todayFormatted,
-      fullDate: date.toISOString().split("T")[0],
+      isToday: date.toISOString().split('T')[0] === todayFormatted,
+      fullDate: date.toISOString().split('T')[0],
       currentMonth: false,
-      day: date.toLocaleDateString("en-US", { weekday: "short" }),
+      day: date.toLocaleDateString('en-US', { weekday: 'short' }),
     });
   }
 

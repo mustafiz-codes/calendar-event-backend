@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
-import ViewTypeDropdown from "./ViewTypeDropdown";
-import { useCalendar } from "../../context/CalendarContext";
-import { useSidebar } from "../../context/SidebarContext";
-import CreateEventModal from "../event/CreateEvent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
+import ViewTypeDropdown from './ViewTypeDropdown';
+import { useCalendar } from '../../context/CalendarContext';
+import { useSidebar } from '../../context/SidebarContext';
+import CreateEventModal from '../event/CreateEvent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
   faQuestionCircle,
@@ -15,7 +15,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faAdd,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 const TopNav = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -32,7 +32,7 @@ const TopNav = () => {
   } = useCalendar();
 
   const handlePrevious = () => {
-    if (viewType === "month") {
+    if (viewType === 'month') {
       goToPreviousMonth();
     } else {
       goToPreviousWeek();
@@ -40,7 +40,7 @@ const TopNav = () => {
   };
 
   const handleNext = () => {
-    if (viewType === "month") {
+    if (viewType === 'month') {
       goToNextMonth();
     } else {
       goToNextWeek();
@@ -48,7 +48,7 @@ const TopNav = () => {
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   };
 
   const handleOpenModal = () => {

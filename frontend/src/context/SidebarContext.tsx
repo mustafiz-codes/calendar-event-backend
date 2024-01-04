@@ -5,7 +5,7 @@ import React, {
   useState,
   ReactElement,
   useEffect,
-} from "react";
+} from 'react';
 
 interface SidebarContextProps {
   isSidebarOpen: boolean;
@@ -33,7 +33,7 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
   };
 
   useEffect(() => {
-    const storedSidebar = localStorage.getItem("sidebar");
+    const storedSidebar = localStorage.getItem('sidebar');
     if (storedSidebar) {
       setIsSidebarOpen(JSON.parse(storedSidebar));
     }
@@ -41,10 +41,10 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
 
   useEffect(() => {
     document.documentElement.setAttribute(
-      "data-sidebar",
+      'data-sidebar',
       isSidebarOpen.toString()
     );
-    localStorage.setItem("sidebar", isSidebarOpen.toString());
+    localStorage.setItem('sidebar', isSidebarOpen.toString());
   }, [isSidebarOpen]);
 
   return (

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import DeleteEventModal from "./DeleteEvent";
-import { to24HourTime } from "../common/common";
+import React, { useEffect, useState } from 'react';
+import DeleteEventModal from './DeleteEvent';
+import { to24HourTime } from '../common/common';
 
 interface ViewEventModalProps {
   eventId: string;
@@ -19,17 +19,17 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const [eventData, setEventData] = useState({
-    title: "",
-    description: "",
-    notes: "",
-    startDate: "",
-    endDate: "",
-    startTime: "",
+    title: '',
+    description: '',
+    notes: '',
+    startDate: '',
+    endDate: '',
+    startTime: '',
     isFullDay: isAllDay,
-    endTime: "",
-    repeat: "none",
+    endTime: '',
+    repeat: 'none',
     repeatCycle: 1,
-    recurringEventId: "",
+    recurringEventId: '',
   });
 
   useEffect(() => {
@@ -38,13 +38,13 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
       .then((response) => response.json())
       .then((data) => {
         const formattedStartDate = data.startDate
-          ? data.startDate.split("T")[0]
-          : "";
-        const formattedEndDate = data.endDate ? data.endDate.split("T")[0] : "";
+          ? data.startDate.split('T')[0]
+          : '';
+        const formattedEndDate = data.endDate ? data.endDate.split('T')[0] : '';
         const formattedStartTime = data.startTime
           ? to24HourTime(data.startTime)
-          : "";
-        const formattedEndTime = data.endTime ? to24HourTime(data.endTime) : "";
+          : '';
+        const formattedEndTime = data.endTime ? to24HourTime(data.endTime) : '';
 
         // Update the eventData and isAllDay state
         setEventData({
@@ -57,7 +57,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
 
         setIsAllDay(data.isFullDay);
       })
-      .catch((error) => console.error("Error fetching event:", error));
+      .catch((error) => console.error('Error fetching event:', error));
   }, [eventId]);
 
   const handleInputChange = (
@@ -70,21 +70,21 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
     setEventData((currentEventData) => {
       const newEventData = { ...currentEventData, [name]: value };
 
-      if (name === "startTime") {
-        const [hours, minutes] = value.split(":").map(Number);
+      if (name === 'startTime') {
+        const [hours, minutes] = value.split(':').map(Number);
         const endTimeHour = (hours + 1) % 24; // Use % 24 to handle the case where startTime is 23:00
         const formattedEndTime = `${endTimeHour
           .toString()
-          .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+          .padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
         return {
           ...newEventData,
           endTime:
-            currentEventData.endTime === ""
+            currentEventData.endTime === ''
               ? formattedEndTime
               : currentEventData.endTime,
         };
-      } else if (name === "startDate" || name === "endDate") {
+      } else if (name === 'startDate' || name === 'endDate') {
         if (newEventData.startDate && newEventData.endDate) {
           const start = new Date(newEventData.startDate);
           const end = new Date(newEventData.endDate);
@@ -93,11 +93,11 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
             return {
               ...newEventData,
               startDate:
-                name === "endDate"
+                name === 'endDate'
                   ? newEventData.endDate
                   : newEventData.startDate,
               endDate:
-                name === "startDate"
+                name === 'startDate'
                   ? newEventData.startDate
                   : newEventData.endDate,
             };
@@ -115,12 +115,12 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
 
     event.preventDefault();
 
-    if (eventData.startDate === null || eventData.startDate === "") {
-      alert("Please enter a start date");
+    if (eventData.startDate === null || eventData.startDate === '') {
+      alert('Please enter a start date');
       return;
     }
 
-    if (eventData.endDate === null || eventData.endDate === "") {
+    if (eventData.endDate === null || eventData.endDate === '') {
       eventData.endDate = eventData.startDate;
     }
     const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
@@ -129,7 +129,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
       (!timeFormat.test(eventData.startTime) ||
         !timeFormat.test(eventData.endTime))
     ) {
-      alert("Please enter time in HH:MM format.");
+      alert('Please enter time in HH:MM format.');
       return;
     }
 
@@ -139,15 +139,15 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
     }
 
     const [startHours, startMinutes] = eventData.startTime
-      .split(":")
+      .split(':')
       .map(Number);
-    const [endHours, endMinutes] = eventData.endTime.split(":").map(Number);
+    const [endHours, endMinutes] = eventData.endTime.split(':').map(Number);
 
     if (
       endHours < startHours ||
       (endHours === startHours && endMinutes < startMinutes)
     ) {
-      alert("End time cannot be before start time.");
+      alert('End time cannot be before start time.');
       return;
     }
 
@@ -165,7 +165,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
         eventData.recurringEventId !== originalData.recurringEventId
       ) {
         alert(
-          "You can only update title, description, notes, time, and isFullDay for recurring events."
+          'You can only update title, description, notes, time, and isFullDay for recurring events.'
         );
         return;
       }
@@ -176,9 +176,9 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
         const response = await fetch(
           `http://localhost:5000/events/${eventId}`,
           {
-            method: "PUT",
+            method: 'PUT',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify(eventData),
           }
@@ -187,16 +187,16 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
         window.location.reload();
         if (!response.ok) {
           const errorData = await response.json();
-          console.error("Error in response:", errorData);
-          throw new Error("Failed to create event");
+          console.error('Error in response:', errorData);
+          throw new Error('Failed to create event');
         }
       } else {
         const response = await fetch(
           `http://localhost:5000/events/recurring/${eventData.recurringEventId}`,
           {
-            method: "PUT",
+            method: 'PUT',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify(eventData),
           }
@@ -204,8 +204,8 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
 
         if (!response.ok) {
           const errorData = await response.json();
-          console.error("Error in response:", errorData);
-          throw new Error("Failed to update recurring event");
+          console.error('Error in response:', errorData);
+          throw new Error('Failed to update recurring event');
         }
 
         window.location.reload();
@@ -213,7 +213,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
 
       onClose(); // Close the modal
     } catch (error) {
-      console.error("Error in creating/updating event:", error);
+      console.error('Error in creating/updating event:', error);
     }
   };
 
@@ -350,7 +350,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
               </label>
             </div>
 
-            {eventData.repeat !== "none" && (
+            {eventData.repeat !== 'none' && (
               <div className="w-full">
                 <label className="block">
                   <span className="text-gray-700">Repeat Cycle</span>
@@ -385,7 +385,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
               }}
               disabled={!viewMode}
               className={`${
-                viewMode ? "cursor-pointer" : "cursor-not-allowed opacity-50"
+                viewMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
               } bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded`}
             >
               Edit Event
@@ -395,7 +395,7 @@ const ViewEvent: React.FC<ViewEventModalProps> = ({
               type="submit"
               disabled={viewMode}
               className={`${
-                !viewMode ? "cursor-pointer" : "cursor-not-allowed opacity-50"
+                !viewMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
               }" bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded`}
             >
               Update Event

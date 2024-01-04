@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { useCalendar } from "../../context/CalendarContext";
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { useCalendar } from '../../context/CalendarContext';
 
 const ViewTypeDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selection, setSelection] = useState("Week");
+  const [selection, setSelection] = useState('Week');
   const location = useLocation();
   const { setViewType } = useCalendar();
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -19,14 +19,14 @@ const ViewTypeDropdown = () => {
   useEffect(() => {
     // Update the selection based on the current path
     const path = location.pathname;
-    if (path === "/month") {
-      setSelection("Month");
-      setViewType("month");
-    } else if (path === "/year") {
-      setSelection("Year");
+    if (path === '/month') {
+      setSelection('Month');
+      setViewType('month');
+    } else if (path === '/year') {
+      setSelection('Year');
     } else {
-      setSelection("Week");
-      setViewType("week");
+      setSelection('Week');
+      setViewType('week');
     }
   }, [location, setViewType]);
 
@@ -51,7 +51,7 @@ const ViewTypeDropdown = () => {
               to="/"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
-              onClick={() => viewTypeChange("Week")}
+              onClick={() => viewTypeChange('Week')}
             >
               Week
             </Link>
@@ -59,7 +59,7 @@ const ViewTypeDropdown = () => {
               to="/month"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
-              onClick={() => viewTypeChange("Month")}
+              onClick={() => viewTypeChange('Month')}
             >
               Month
             </Link>
@@ -67,7 +67,7 @@ const ViewTypeDropdown = () => {
               to="/year"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
-              onClick={() => viewTypeChange("Year")}
+              onClick={() => viewTypeChange('Year')}
             >
               Year
             </Link>

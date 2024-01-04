@@ -7,7 +7,7 @@ export interface Event {
   startTime?: string; // Optional start time as a string, e.g., "10:00"
   endTime?: string; // Optional end time as a string, e.g., "11:00"
   isFullDay: boolean;
-  repeat?: "none" | "daily" | "weekly" | "monthly" | "yearly";
+  repeat?: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
   repeatCycle?: number;
 }
 
@@ -20,7 +20,7 @@ export const getDatesInRange = (
   const dates = [];
 
   while (start < end) {
-    dates.push(new Date(start).toISOString().split("T")[0]); // 'YYYY-MM-DD'
+    dates.push(new Date(start).toISOString().split('T')[0]); // 'YYYY-MM-DD'
     start.setDate(start.getDate() + 1);
   }
 
@@ -36,14 +36,14 @@ export const hourHeight = 48; // For example, each hour block is 48px tall
 
 // Util function to get day name abbreviation
 export const getDayNameAbbreviation = (date: Date) => {
-  return date.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
+  return date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 };
 
 export const to24HourTime = (time: string): string => {
   // Validate time format (optional)
   if (!/^\d{2}:\d{2}$/.test(time)) {
     console.error(`Invalid time format: "${time}"`);
-    return "00:00"; // Return a default value for invalid format
+    return '00:00'; // Return a default value for invalid format
   }
 
   return time; // Return the time as it is in 24-hour format
@@ -58,7 +58,7 @@ export const getWeekDates = (date: Date) => {
     weekDate.setDate(weekStart.getDate() + i);
     return {
       dayOfWeek: getDayNameAbbreviation(weekDate),
-      fullDate: weekDate.toISOString().split("T")[0], // 'YYYY-MM-DD'
+      fullDate: weekDate.toISOString().split('T')[0], // 'YYYY-MM-DD'
       date: weekDate.getDate(),
     };
   });
@@ -72,7 +72,7 @@ export const eventsByDateAndTime: {
 export const times = Array.from({ length: 24 }, (_, index) => `${index}:00 `);
 
 export const getHourIndex = (time: string): number => {
-  const [hour] = time.split(":").map(Number);
+  const [hour] = time.split(':').map(Number);
   return hour; // returns 0 for 12:00 AM, 1 for 1:00 AM, etc.
 };
 
@@ -87,18 +87,18 @@ export const calculateTop = (event: Event): number => {
     return 0; // Full-day events start at the top
   }
   // Non full-day events calculate the top based on the start time
-  const time = event.startTime || "00:00";
+  const time = event.startTime || '00:00';
   return calculateTimePosition(time);
 };
 
 export const calculateTimePosition = (time: string): number => {
-  const [hours, minutes] = time.split(":").map(Number);
+  const [hours, minutes] = time.split(':').map(Number);
   return (hours * 60 + minutes) * (hourHeight / 60);
 };
 
 export const calculateDurationHeight = (start: string, end: string): number => {
-  const [startHours, startMinutes] = start.split(":").map(Number);
-  const [endHours, endMinutes] = end.split(":").map(Number);
+  const [startHours, startMinutes] = start.split(':').map(Number);
+  const [endHours, endMinutes] = end.split(':').map(Number);
   return (
     ((endHours - startHours) * 60 + (endMinutes - startMinutes)) *
     (hourHeight / 60)
@@ -110,8 +110,8 @@ export const calculateHeight = (event: Event): number => {
     return hourHeight; // Full-day event height
   }
   // For non full-day events, calculate the height based on the time duration
-  const start = event.startTime || "00:00";
-  const end = event.endTime || "23:59";
+  const start = event.startTime || '00:00';
+  const end = event.endTime || '23:59';
   return calculateDurationHeight(start, end);
 };
 

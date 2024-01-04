@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import GenerateCalendar from "../components/datePicker/GenerateCalendar";
-import { useCalendar } from "../context/CalendarContext";
-import { getDatesInRange } from "../components/common/common";
-import ViewEvent from "../components/event/ViewEvent";
+import { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import GenerateCalendar from '../components/datePicker/GenerateCalendar';
+import { useCalendar } from '../context/CalendarContext';
+import { getDatesInRange } from '../components/common/common';
+import ViewEvent from '../components/event/ViewEvent';
 
 const MonthlyView = () => {
   const { currentDate } = useCalendar();
@@ -13,15 +13,15 @@ const MonthlyView = () => {
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/events")
+    fetch('http://localhost:5000/events')
       .then((response) => response.json())
       .then((data: Event[]) => {
         const newEvents: EventsByDate = data.reduce(
           (acc: EventsByDate, event: Event) => {
             // Convert startDate and endDate to 'YYYY-MM-DD' format
-            const formattedStartDate = event.startDate.split("T")[0];
+            const formattedStartDate = event.startDate.split('T')[0];
             const formattedEndDate = event.endDate
-              ? event.endDate.split("T")[0]
+              ? event.endDate.split('T')[0]
               : undefined;
 
             const range: string[] =
@@ -74,7 +74,7 @@ const MonthlyView = () => {
     startTime?: string;
     endTime?: string;
     isFullDay: boolean;
-    repeat?: "none" | "daily" | "weekly" | "monthly" | "yearly";
+    repeat?: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
     repeatCycle?: number;
   }
 
@@ -94,7 +94,7 @@ const MonthlyView = () => {
     <>
       <div className="rounded-lg shadow h-full mb-12 overflow-hidden">
         <div className="grid grid-cols-7 text-center border-b">
-          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
             <div key={day} className="px-4 py-2 font-medium">
               {day}
             </div>
@@ -105,15 +105,15 @@ const MonthlyView = () => {
             <div
               key={index}
               className={`p-4 w-full text-center border ${
-                !day.currentMonth && "text-gray-400"
+                !day.currentMonth && 'text-gray-400'
               }`}
             >
               <div
                 className={`text-sm ${
                   day.isToday
-                    ? "border-2 border-sky-600 rounded-3xl text-center"
-                    : ""
-                } ${day.isToday && "font-semibold"}`}
+                    ? 'border-2 border-sky-600 rounded-3xl text-center'
+                    : ''
+                } ${day.isToday && 'font-semibold'}`}
               >
                 {day.date}
               </div>
@@ -132,14 +132,14 @@ const MonthlyView = () => {
                     >
                       <p
                         className={`text-white p-1 rounded ${
-                          event.isFullDay ? "bg-green-600" : "bg-sky-600"
+                          event.isFullDay ? 'bg-green-600' : 'bg-sky-600'
                         }`}
                       >
-                        {event.title} -{" "}
+                        {event.title} -{' '}
                         {event.isFullDay
-                          ? "All day"
-                          : `${event.startTime || "Start"} to ${
-                              event.endTime || "End"
+                          ? 'All day'
+                          : `${event.startTime || 'Start'} to ${
+                              event.endTime || 'End'
                             }`}
                       </p>
                     </div>
@@ -149,10 +149,10 @@ const MonthlyView = () => {
         </div>
       </div>
       {modalContent &&
-        document.getElementById("modal-root") &&
+        document.getElementById('modal-root') &&
         ReactDOM.createPortal(
           modalContent,
-          document.getElementById("modal-root") as Element
+          document.getElementById('modal-root') as Element
         )}
     </>
   );

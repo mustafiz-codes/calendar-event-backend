@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface DeleteEventModalProps {
   eventId: string;
@@ -28,16 +28,16 @@ const DeleteEventModal: React.FC<DeleteEventModalProps> = ({
 
     try {
       const response = await fetch(deleteEndpoint, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
-      if (!response.ok) throw new Error("Failed to delete event");
+      if (!response.ok) throw new Error('Failed to delete event');
 
       onDeleteClose();
       window.location.reload();
       // Close the modal after successful deletion
     } catch (error) {
-      console.error("Error deleting event:", error);
+      console.error('Error deleting event:', error);
     }
   };
 

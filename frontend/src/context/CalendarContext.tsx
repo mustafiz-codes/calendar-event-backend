@@ -1,11 +1,11 @@
 // CalendarContext.js
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import React, { ReactNode, createContext, useContext, useState } from 'react';
 
 export interface CalendarContextType {
   currentDate: Date;
-  viewType: "week" | "month";
+  viewType: 'week' | 'month';
   setCurrentDate: (date: Date) => void;
-  setViewType: (viewType: "week" | "month") => void;
+  setViewType: (viewType: 'week' | 'month') => void;
   goToPreviousMonth: () => void;
   goToNextMonth: () => void;
   goToPreviousWeek: () => void;
@@ -15,7 +15,7 @@ export interface CalendarContextType {
 
 export const CalendarContext = createContext<CalendarContextType>({
   currentDate: new Date(),
-  viewType: "week",
+  viewType: 'week',
   setCurrentDate: () => {},
   setViewType: () => {},
   goToPreviousMonth: () => {},
@@ -31,7 +31,7 @@ export const CalendarProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewType, setViewType] = useState<"week" | "month">("week");
+  const [viewType, setViewType] = useState<'week' | 'month'>('week');
 
   const goToPreviousMonth = () => {
     setCurrentDate(

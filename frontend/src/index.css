@@ -14,7 +14,7 @@
 }
 
 /* Define dark theme variables */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-bg: #141414; /* Dark background */
   --color-text: #f4f4f4; /* Light text */
 

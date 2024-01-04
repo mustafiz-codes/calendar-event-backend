@@ -1,8 +1,8 @@
-import "./App.css";
-import { useTheme } from "./context/ThemeContext";
-import TopNav from "./components/topNav/TopNav";
-import SideNav from "./components/sideNav/SideNav";
-import MainContent from "./components/mainContent/MainContent";
+import './App.css';
+import { useTheme } from './context/ThemeContext';
+import TopNav from './components/topNav/TopNav';
+import SideNav from './components/sideNav/SideNav';
+import MainContent from './components/mainContent/MainContent';
 
 function App() {
   const { theme } = useTheme();

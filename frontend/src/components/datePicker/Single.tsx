@@ -1,10 +1,10 @@
-import { useCalendar } from "../../context/CalendarContext";
-import generateCalendar from "./GenerateCalendar";
+import { useCalendar } from '../../context/CalendarContext';
+import generateCalendar from './GenerateCalendar';
 import {
   faChevronLeft,
   faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SingleDatePicker = () => {
   const { currentDate, setCurrentDate } = useCalendar();
@@ -34,11 +34,11 @@ const SingleDatePicker = () => {
         </button>
         <div>
           <span className="text-lg font-semibold">
-            {currentDate.toLocaleString("default", { month: "long" })}{" "}
+            {currentDate.toLocaleString('default', { month: 'long' })}{' '}
           </span>
           <span className="text-lg"> / </span>
           <span className="text-lg font-semibold">
-            {currentDate.toLocaleString("default", { year: "numeric" })}{" "}
+            {currentDate.toLocaleString('default', { year: 'numeric' })}{' '}
           </span>
         </div>
         <button
@@ -51,7 +51,7 @@ const SingleDatePicker = () => {
       </div>
 
       <div className="grid grid-cols-7 gap-1">
-        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
           <div key={day} className="text-center font-medium">
             {day}
           </div>
@@ -60,16 +60,16 @@ const SingleDatePicker = () => {
           <div
             key={index}
             className={`text-center py-2 cursor-pointer
-              ${day.currentMonth ? "" : "text-gray-400"}
+              ${day.currentMonth ? '' : 'text-gray-400'}
               ${
                 day.isToday
-                  ? "border-2 border-sky-600 text-sky-600 rounded-3xl"
-                  : ""
+                  ? 'border-2 border-sky-600 text-sky-600 rounded-3xl'
+                  : ''
               }
               ${
                 day.currentMonth && day.isToday
-                  ? "bg-sky-600 text-white"
-                  : "hover:bg-sky-200"
+                  ? 'bg-sky-600 text-white'
+                  : 'hover:bg-sky-200'
               }`}
             onClick={() => {
               if (day.currentMonth) {

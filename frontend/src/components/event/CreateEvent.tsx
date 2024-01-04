@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 interface CreateEventModalProps {
   isOpen: boolean;
@@ -12,22 +12,22 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
   const [isAllDay, setIsAllDay] = useState(false);
 
   const [eventData, setEventData] = useState({
-    title: "",
-    description: "",
-    notes: "",
-    startDate: "",
-    endDate: "",
-    startTime: "",
+    title: '',
+    description: '',
+    notes: '',
+    startDate: '',
+    endDate: '',
+    startTime: '',
     isFullDay: isAllDay,
-    endTime: "",
-    repeat: "none",
+    endTime: '',
+    repeat: 'none',
     repeatCycle: 1,
   });
 
   useEffect(() => {
     // Reset repeatCycle when repeat is set to none
     setEventData((currentData) => {
-      if (currentData.repeat === "none" && currentData.repeatCycle !== 1) {
+      if (currentData.repeat === 'none' && currentData.repeatCycle !== 1) {
         return { ...currentData, repeatCycle: 1 };
       }
       return currentData;
@@ -51,21 +51,21 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
     setEventData((currentEventData) => {
       const newEventData = { ...currentEventData, [name]: value };
 
-      if (name === "startTime") {
-        const [hours, minutes] = value.split(":").map(Number);
+      if (name === 'startTime') {
+        const [hours, minutes] = value.split(':').map(Number);
         const endTimeHour = (hours + 1) % 24; // Use % 24 to handle the case where startTime is 23:00
         const formattedEndTime = `${endTimeHour
           .toString()
-          .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+          .padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
         return {
           ...newEventData,
           endTime:
-            currentEventData.endTime === ""
+            currentEventData.endTime === ''
               ? formattedEndTime
               : currentEventData.endTime,
         };
-      } else if (name === "startDate" || name === "endDate") {
+      } else if (name === 'startDate' || name === 'endDate') {
         if (newEventData.startDate && newEventData.endDate) {
           const start = new Date(newEventData.startDate);
           const end = new Date(newEventData.endDate);
@@ -74,11 +74,11 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
             return {
               ...newEventData,
               startDate:
-                name === "endDate"
+                name === 'endDate'
                   ? newEventData.endDate
                   : newEventData.startDate,
               endDate:
-                name === "startDate"
+                name === 'startDate'
                   ? newEventData.startDate
                   : newEventData.endDate,
             };
@@ -93,12 +93,12 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (eventData.startDate === null || eventData.startDate === "") {
-      alert("Please enter a start date");
+    if (eventData.startDate === null || eventData.startDate === '') {
+      alert('Please enter a start date');
       return;
     }
 
-    if (eventData.endDate === null || eventData.endDate === "") {
+    if (eventData.endDate === null || eventData.endDate === '') {
       eventData.endDate = eventData.startDate;
     }
     const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
@@ -107,42 +107,42 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
       (!timeFormat.test(eventData.startTime) ||
         !timeFormat.test(eventData.endTime))
     ) {
-      alert("Please enter time in HH:MM format.");
+      alert('Please enter time in HH:MM format.');
       return;
     }
 
     const [startHours, startMinutes] = eventData.startTime
-      .split(":")
+      .split(':')
       .map(Number);
-    const [endHours, endMinutes] = eventData.endTime.split(":").map(Number);
+    const [endHours, endMinutes] = eventData.endTime.split(':').map(Number);
 
     if (
       endHours < startHours ||
       (endHours === startHours && endMinutes < startMinutes)
     ) {
-      alert("End time cannot be before start time.");
+      alert('End time cannot be before start time.');
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/events", {
-        method: "POST",
+      const response = await fetch('http://localhost:5000/events', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(eventData),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error in response:", errorData);
-        throw new Error("Failed to create event");
+        console.error('Error in response:', errorData);
+        throw new Error('Failed to create event');
       }
 
       onClose(); // Close the modal
       window.location.reload();
     } catch (error) {
-      console.error("Error in creating event:", error);
+      console.error('Error in creating event:', error);
     }
   };
 
@@ -259,7 +259,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
             </label>
           </div>
 
-          {eventData.repeat !== "none" && (
+          {eventData.repeat !== 'none' && (
             <div className="w-full">
               <label className="block">
                 <span className="text-gray-700">Repeat Cycle</span>
