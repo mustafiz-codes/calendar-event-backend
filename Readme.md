@@ -45,7 +45,7 @@ To use Calendar Event Management System, follow these steps:
   - Start the Docker containers:
     `npm run docker:up`
   - The frontend will be available at `http://localhost:3000` and the backend at
-    `http://localhost:3001`.
+    `http://localhost:5000`.
 - To stop and remove Docker containers:
   `npm run docker:down`
 
@@ -72,6 +72,11 @@ To run tests, execute the following command:
 - `PUT /events/:id`: Update an event by its ID.
 - `DELETE /events/:id`: Delete an event by its ID.
 - `GET /range`: Get events within a specified range.
+
+## For API Docs 
+
+- `http://localhost:5000/api-docs/` : Get all details for api
+
 
 # Router Handlers
 
