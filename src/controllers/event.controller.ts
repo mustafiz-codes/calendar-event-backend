@@ -1,13 +1,38 @@
 import { Request, Response } from 'express';
 import * as EventService from '../services/event.service';
 
+import joi from 'joi';
+
+const eventSchema = joi.object({
+  title: joi.string().min(3).max(150).required(),
+  description: joi.string().max(500).allow(''),
+  notes: joi.string().max(500).allow(''),
+  startDate: joi.date().required(),
+  endDate: joi.date(),
+  startTime: joi.when('isFullDay', {
+    is: false,
+    then: joi.string().required(),
+    otherwise: joi.string().allow(''),
+  }),
+  endTime: joi
+    .string()
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .allow(''),
+  isFullDay: joi.boolean().required(),
+  repeat: joi.string().valid('none', 'daily', 'weekly', 'monthly', 'yearly'),
+  repeatCycle: joi.number().min(1),
+});
+
 export const createEvent = async (req: Request, res: Response) => {
   try {
+    const { error } = eventSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
     const newEvent = await EventService.createEventService(req.body);
     res.status(201).send(newEvent);
   } catch (error) {
-    console.error('Error in POST /events:', error);
-    res.status(500).send('Error processing request');
+    res.status(500).send('Internal server error');
   }
 };
 
