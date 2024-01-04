@@ -73,10 +73,9 @@ To run tests, execute the following command:
 - `DELETE /events/:id`: Delete an event by its ID.
 - `GET /range`: Get events within a specified range.
 
-## For API Docs 
+## For API Docs
 
 - `http://localhost:5000/api-docs/` : Get all details for api
-
 
 # Router Handlers
 
