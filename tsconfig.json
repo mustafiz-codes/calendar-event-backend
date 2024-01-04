@@ -1,18 +1,13 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "target": "ES2020",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist"
   },
-  "include": [
-    "src/**/*",
-    "src/tests/**/*" // Ensure this line or similar is present
-  ],
-  "exclude": [
-    "node_modules"
-    // ... you may exclude other directories if needed ...
-  ]
+  "include": ["frontend/**/*", "src/**/*", "src/tests/**/*"],
+  "exclude": ["node_modules"]
 }

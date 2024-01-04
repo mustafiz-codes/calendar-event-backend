@@ -8,17 +8,7 @@ const ViewTypeDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selection, setSelection] = useState("Week");
   const location = useLocation();
-  const {
-    currentDate,
-    viewType,
-    setViewType,
-    goToPreviousMonth,
-    setCurrentDate,
-    goToNextMonth,
-    goToPreviousWeek,
-    goToNextWeek,
-    goToToday,
-  } = useCalendar();
+  const { setViewType } = useCalendar();
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const viewTypeChange = (type: string) => {
@@ -38,7 +28,7 @@ const ViewTypeDropdown = () => {
       setSelection("Week");
       setViewType("week");
     }
-  }, [location]);
+  }, [location, setViewType]);
 
   return (
     <div className="relative inline-block text-left">

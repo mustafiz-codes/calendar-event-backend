@@ -1,4 +1,3 @@
-import express, { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { generateRepeatingEvents } from "../../src/helpers/generateRepeatingEvents";
 import { IEvent } from "../db/event.interface";
@@ -9,82 +8,72 @@ export const createEventService = async (eventData: IEvent) => {
 
   if (eventData.repeat !== "none") {
     const events = generateRepeatingEvents(eventData);
-    const allEvents = await EventModel.insertMany(events);
-
-    return allEvents;
+    // Directly return the Promise
+    return EventModel.insertMany(events);
   }
 
   const newEvent = new EventModel(eventData);
-  return await newEvent.save(); // Now returns an object with the main event and any additional events
+  // No need to await here, just return the Promise
+  return newEvent.save();
 };
 
 // Get all events
-export const getAllEventsService = async (): Promise<IEvent[]> => {
-  return await EventModel.find({});
+export const getAllEventsService = (): Promise<IEvent[]> => {
+  // Directly return the Promise without async/await
+  return EventModel.find({});
 };
 
 // Get event by ID
-export const getEventByIdService = async (
-  id: string
-): Promise<IEvent | null> => {
-  return await EventModel.findById(id);
+export const getEventByIdService = (id: string): Promise<IEvent | null> => {
+  return EventModel.findById(id);
 };
 
 // Update event by ID
-export const updateEventByIdService = async (
+export const updateEventByIdService = (
   id: string,
   updateData: Partial<IEvent>
 ): Promise<IEvent | null> => {
-  return await EventModel.findByIdAndUpdate(id, updateData, { new: true });
+  return EventModel.findByIdAndUpdate(id, updateData, { new: true });
 };
 
 // Delete event by ID
-export const deleteEventByIdService = async (
-  id: string
-): Promise<IEvent | null> => {
+export const deleteEventByIdService = (id: string): Promise<IEvent | null> => {
   // Perform the deletion operation
-
-  const result = await EventModel.findByIdAndDelete(id);
-
-  // Check if a document was found and deleted
-  if (result && (result as any).toJSON) {
-    return (result as any).toJSON() as IEvent;
-  } else {
-    return null;
-  }
+  return EventModel.findByIdAndDelete(id, { new: true });
 };
 
 // Delete recurring events
-export const deleteRecurringEventsService = async (
+export const deleteRecurringEventsService = (
   recurringEventId: string
 ): Promise<{ deletedCount?: number }> => {
-  return await EventModel.deleteMany({ recurringEventId });
+  return EventModel.deleteMany({ recurringEventId });
 };
 
 // Get events by date range
-export const getEventsByRangeService = async (
+export const getEventsByRangeService = (
   start: Date,
   end: Date
 ): Promise<IEvent[]> => {
-  return await EventModel.find({
+  return EventModel.find({
     startDate: { $gte: start },
     endDate: { $lte: end },
   });
 };
 
 // Update recurring events
-export const updateRecurringEventsService = async (
+export const updateRecurringEventsService = (
   recurringEventId: string,
   updateData: Partial<IEvent>
 ): Promise<{ matchedCount?: number }> => {
-  return await EventModel.updateMany(
+  return EventModel.updateMany(
     { recurringEventId },
     { $set: updateData },
     { new: true }
   );
 };
 
-export const deleteAllEvents = async (): Promise<{ deletedCount?: number }> => {
-  const result = await EventModel.deleteMany({});
-  return { deletedCount: result.deletedCount };
+export const deleteAllEvents = (): Promise<{ deletedCount?: number }> => {
+  return EventModel.deleteMany({}).then((result) => ({
+    deletedCount: result.deletedCount,
+  }));
 };

@@ -21,14 +21,12 @@ const DeleteEventModal: React.FC<DeleteEventModalProps> = ({
   if (!isOpen) return null;
 
   const handleDeleteConfirm = async () => {
-    console.log("recurringEventId", recurringEventId);
     const deleteEndpoint =
       deleteAllRecurring && isRecurring
         ? `http://localhost:5000/events/recurring/${recurringEventId}` // Endpoint for deleting all recurring events
         : `http://localhost:5000/events/${eventId}`; // Endpoint for deleting a single event
 
     try {
-      console.log("deleteEndpoint", deleteEndpoint);
       const response = await fetch(deleteEndpoint, {
         method: "DELETE",
       });

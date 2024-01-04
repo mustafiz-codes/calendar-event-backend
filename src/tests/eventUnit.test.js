@@ -1,22 +1,15 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const { describe, it, afterEach } = require("mocha");
-const sinon = require("sinon");
-const { v4: uuidv4 } = require("uuid");
-const sinonChai = require("sinon-chai");
+import chai from "chai";
+import { describe, it, afterEach } from "mocha";
+import sinon from "sinon";
+import { v4 as uuidv4 } from "uuid";
+import sinonChai from "sinon-chai";
+import faker from "faker";
+
+import EventService from "../services/event.service";
+import { createEvent, getAllEvents } from "../controllers/event.controller";
 
 chai.use(sinonChai);
 const { expect } = chai;
-
-const EventService = require("../services/event.service");
-const { assert } = require("console");
-const e = require("express");
-const faker = require("faker");
-
-const {
-  createEvent,
-  getAllEvents,
-} = require("../controllers/event.controller");
 
 describe("Event Controller Unit Tests", () => {
   afterEach(() => {

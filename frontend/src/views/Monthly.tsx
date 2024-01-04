@@ -9,12 +9,11 @@ const MonthlyView = () => {
   const { currentDate } = useCalendar();
   const calendarDays = GenerateCalendar(currentDate);
   const [events, setEvents] = useState<Event[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/events") // Replace with the actual URL
+    fetch("http://localhost:5000/events")
       .then((response) => response.json())
       .then((data: Event[]) => {
         const newEvents: EventsByDate = data.reduce(
@@ -50,41 +49,36 @@ const MonthlyView = () => {
         );
 
         setEvents(Object.values(newEvents).flat());
-
-        console.log(events);
       })
       .catch(console.error);
   }, []);
 
   interface CalendarDay {
-    date: number; // Assuming this is the numeric day of the month
-    isToday: boolean; // Indicates if this day is today
-    fullDate: string; // The full date in 'YYYY-MM-DD' format
-    currentMonth: boolean; // Indicates if this day is in the current month
+    date: number;
+    isToday: boolean;
+    fullDate: string;
+    currentMonth: boolean;
     day: string;
-    // ... any other properties that a day object might have
   }
 
   interface EventsByDate {
-    [date: string]: Event[]; // This defines an index signature for the object
+    [date: string]: Event[];
   }
-  // Use the `useState` hook with the correct type
 
   interface Event {
-    _id: string; // Using _id instead of id as per Mongoose schema
+    _id: string;
     title: string;
     description?: string;
-    startDate: string; // ISO date string, e.g., "2023-12-25"
-    endDate?: string; // ISO date string, e.g., "2023-12-25"
-    startTime?: string; // Optional start time as a string, e.g., "10:00"
-    endTime?: string; // Optional end time as a string, e.g., "11:00"
+    startDate: string;
+    endDate?: string;
+    startTime?: string;
+    endTime?: string;
     isFullDay: boolean;
     repeat?: "none" | "daily" | "weekly" | "monthly" | "yearly";
     repeatCycle?: number;
   }
 
   const handleEventClick = (eventId: string) => {
-    console.log("sending", eventId);
     setSelectedEventId(eventId);
     setModalOpen(true);
   };

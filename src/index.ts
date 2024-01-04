@@ -4,8 +4,8 @@ import cors from "cors";
 import morgan from "morgan";
 import { connectDatabase } from "./db/connection";
 import eventsRouter from "./routes/event.routes";
-const swaggerUI = require("swagger-ui-express");
-const swaggerDocument = require("./docs/swagger.json");
+import swaggerUI from "swagger-ui-express";
+import swaggerDocument from "./docs/swagger.json";
 
 const app = express();
 
@@ -16,7 +16,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+  res.send(
+    `Database connected! check API docs at http://localhost:5000/api-docs`
+  );
 });
 
 app.use("/events", eventsRouter);

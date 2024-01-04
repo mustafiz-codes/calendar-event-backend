@@ -24,19 +24,14 @@ const TopNav = () => {
   const {
     currentDate,
     viewType,
-    setViewType,
     goToPreviousMonth,
-    setCurrentDate,
     goToNextMonth,
     goToPreviousWeek,
     goToNextWeek,
     goToToday,
   } = useCalendar();
 
-  const handleEventCreated = () => {};
-
   const handlePrevious = () => {
-    console.log("handlePrevious ", viewType);
     if (viewType === "month") {
       goToPreviousMonth();
     } else {
@@ -45,7 +40,6 @@ const TopNav = () => {
   };
 
   const handleNext = () => {
-    console.log("handleNext ", viewType);
     if (viewType === "month") {
       goToNextMonth();
     } else {
@@ -59,10 +53,6 @@ const TopNav = () => {
 
   const handleOpenModal = () => {
     setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
   };
 
   return (

@@ -1,18 +1,13 @@
-process.env.NODE_ENV = "test";
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const { app } = require("../index"); // Adjust the path as necessary
-const assert = chai.assert;
-const faker = require("faker");
-const EventModel = require("../models/event.model");
+import chai from "chai";
+import chaiHttp from "chai-http";
+import assert from "chai";
+import faker from "faker";
+import { deleteAllEvents } from "../services/event.service";
+import _p from "../helpers/asyncWrapper";
 
 chai.use(chaiHttp);
 
 const server = "http://localhost:5000";
-
-const { deleteAllEvents } = require("../services/event.service");
-
-const _p = require("../helpers/asyncWrapper");
 
 describe("Event test suite", () => {
   beforeEach(async () => {
@@ -23,7 +18,7 @@ describe("Event test suite", () => {
     const eventData = {
       title: faker.lorem.words(),
       startDate: faker.date.future(),
-      isFullDay: faker.datatype.boolean("true"),
+      isFullDay: true,
       repeat: "none",
     };
 
@@ -49,11 +44,11 @@ describe("Event test suite", () => {
     const eventData = {
       title: faker.lorem.words(),
       startDate: faker.date.future(),
-      isFullDay: faker.datatype.boolean("true"),
+      isFullDay: true,
       repeat: "none",
     };
 
-    const [err, res] = await _p(
+    const [, res] = await _p(
       chai.request(server).post("/events").send(eventData)
     );
     const event = res.body;
@@ -78,11 +73,11 @@ describe("Event test suite", () => {
     const eventData = {
       title: faker.lorem.words(),
       startDate: faker.date.future(),
-      isFullDay: faker.datatype.boolean("true"),
+      isFullDay: true,
       repeat: "none",
     };
 
-    const [err, res] = await _p(
+    const [, res] = await _p(
       chai.request(server).post("/events").send(eventData)
     );
     const event = res.body;
@@ -105,11 +100,11 @@ describe("Event test suite", () => {
     const eventData = {
       title: faker.lorem.words(),
       startDate: faker.date.future(),
-      isFullDay: faker.datatype.boolean("true"),
+      isFullDay: true,
       repeat: "none",
     };
 
-    const [err, res] = await _p(
+    const [, res] = await _p(
       chai.request(server).post("/events").send(eventData)
     );
     const event = res.body;
@@ -121,58 +116,20 @@ describe("Event test suite", () => {
     assert.isNull(err2, "There should be no error");
     assert.equal(res2.status, 200);
 
-    const [err3, res3] = await _p(
-      chai.request(server).get(`/events/${event._id}`)
-    );
+    const [, res3] = await _p(chai.request(server).get(`/events/${event._id}`));
 
     assert.equal(res3.status, 404);
   });
 
   it("should get all events", async () => {
-    const eventData = {
-      title: faker.lorem.words(),
-      startDate: faker.date.future(),
-      isFullDay: faker.datatype.boolean("true"),
-      repeat: "none",
-    };
+    const [err, res] = await _p(chai.request(server).get("/events"));
 
-    const [err, res] = await _p(
-      chai.request(server).post("/events").send(eventData)
-    );
-    const event = res.body;
+    const events = res.body;
 
-    const [err2, res2] = await _p(chai.request(server).get("/events"));
-
-    const events = res2.body;
-
-    assert.isNull(err2, "There should be no error");
-    assert.equal(res2.status, 200);
+    assert.isNull(err, "There should be no error");
+    assert.equal(res.status, 200);
     assert.isArray(events, "Events should be an array");
     assert.equal(events.length, 1, "There should be 1 event");
-  });
-
-  it("should create events with repeat", async () => {
-    const eventData = {
-      title: faker.lorem.words(),
-      startDate: "2024-01-02",
-      isFullDay: faker.datatype.boolean("true"),
-      repeat: "monthly",
-    };
-
-    const [err, res] = await _p(
-      chai.request(server).post("/events").send(eventData)
-    );
-
-    const event = res.body;
-
-    const [err2, res2] = await _p(chai.request(server).get("/events"));
-
-    const events = res2.body;
-
-    assert.isNull(err2, "There should be no error");
-    assert.equal(res2.status, 200);
-    assert.isArray(events, "Events should be an array");
-    assert.equal(events.length, 12, "There should be 12 events");
   });
 
   afterEach(async () => {

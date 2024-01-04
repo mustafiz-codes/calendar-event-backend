@@ -2,9 +2,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-
-console.log("mongoURl ", process.env.MONGO_URL);
-
 const databaseUrl: string =
   process.env.MONGO_URL || "your_default_database_url";
 

@@ -3,8 +3,6 @@ import { useTheme } from "./context/ThemeContext";
 import TopNav from "./components/topNav/TopNav";
 import SideNav from "./components/sideNav/SideNav";
 import MainContent from "./components/mainContent/MainContent";
-import { SidebarProvider } from "./context/SidebarContext";
-import { CalendarProvider } from "./context/CalendarContext";
 
 function App() {
   const { theme } = useTheme();

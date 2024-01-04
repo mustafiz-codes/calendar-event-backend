@@ -1,8 +1,7 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import * as EventService from "../services/event.service";
 
 export const createEvent = async (req: Request, res: Response) => {
-  console.log("hi", req.body);
   try {
     const newEvent = await EventService.createEventService(req.body);
     res.status(201).send(newEvent);
@@ -119,9 +118,6 @@ export const getEventsByRange = async (req: Request, res: Response) => {
 export const updateRecurringEvents = async (req: Request, res: Response) => {
   const { recurringEventId } = req.params;
   const updateData = req.body;
-
-  console.log("updateData", updateData);
-
   try {
     const result = await EventService.updateRecurringEventsService(
       recurringEventId,

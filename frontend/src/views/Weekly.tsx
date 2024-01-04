@@ -6,9 +6,7 @@ import {
   calculateHeight,
   calculateTop,
   calculateWidthAndLeft,
-  eventsByDateAndTime,
   getDatesInRange,
-  getHourIndex,
   getWeekDates,
   times,
   to24HourTime,
@@ -19,7 +17,7 @@ interface EventsByDateAndTime {
 }
 
 const Weekly: React.FC = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [, setEvents] = useState<Event[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { currentDate } = useCalendar(); // Using currentDate from CalendarContext
@@ -27,8 +25,6 @@ const Weekly: React.FC = () => {
     useState<EventsByDateAndTime>({});
 
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
-
-  // const [selectedEvent, setSelectedEvent] = useState<Event[]>([]);
 
   useEffect(() => {
     const weekDates = getWeekDates(new Date(currentDate));
@@ -41,8 +37,6 @@ const Weekly: React.FC = () => {
       .then((response) => response.json())
       .then((fetchedEvents) => {
         setEvents(fetchedEvents);
-
-        console.log("fetchedEvents", fetchedEvents);
         const newEventsByDateAndTime: EventsByDateAndTime = {};
 
         fetchedEvents.forEach((event: Event) => {
@@ -60,11 +54,6 @@ const Weekly: React.FC = () => {
               ? getDatesInRange(formattedStartDate, formattedEndDate)
               : [formattedStartDate];
 
-          // const eventDates = event.endDate
-          //   ? getDatesInRange(event.startDate, event.endDate)
-          //   : [event.startDate];
-
-          console.log("range", range);
           range.forEach((date, index, array) => {
             const startTime = event.startTime || "00:00"; // Use event's start time
             const endTime = event.endTime || "23:59"; // Use event's end time
@@ -103,7 +92,6 @@ const Weekly: React.FC = () => {
   const weekDates = getWeekDates(currentDate);
 
   const handleEventClick = (eventId: string) => {
-    console.log("sending", eventId);
     setSelectedEventId(eventId);
     setModalOpen(true);
   };

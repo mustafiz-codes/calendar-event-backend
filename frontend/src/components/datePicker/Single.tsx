@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useCalendar } from "../../context/CalendarContext";
 import generateCalendar from "./GenerateCalendar";
 import {
@@ -6,11 +5,6 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-type CalendarContextType = {
-  currentDate: Date;
-  setCurrentDate: (date: Date) => void; // Expects a Date object
-};
 
 const SingleDatePicker = () => {
   const { currentDate, setCurrentDate } = useCalendar();

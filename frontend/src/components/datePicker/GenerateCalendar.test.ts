@@ -1,4 +1,4 @@
-import generateCalendar, { CalendarDay } from "./GenerateCalendar";
+import generateCalendar from "./GenerateCalendar";
 
 describe("generateCalendar", () => {
   it("should generate calendar days for the selected date", () => {

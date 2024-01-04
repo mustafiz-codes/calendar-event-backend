@@ -26,9 +26,12 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
 
   useEffect(() => {
     // Reset repeatCycle when repeat is set to none
-    if (eventData.repeat === "none") {
-      setEventData({ ...eventData, repeatCycle: 1 });
-    }
+    setEventData((currentData) => {
+      if (currentData.repeat === "none" && currentData.repeatCycle !== 1) {
+        return { ...currentData, repeatCycle: 1 };
+      }
+      return currentData;
+    });
   }, [eventData.repeat]);
 
   useEffect(() => {
@@ -121,8 +124,6 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
       return;
     }
 
-    console.log("before post eventData", eventData);
-
     try {
       const response = await fetch("http://localhost:5000/events", {
         method: "POST",
@@ -131,8 +132,6 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
         },
         body: JSON.stringify(eventData),
       });
-
-      console.log("response", response.body);
 
       if (!response.ok) {
         const errorData = await response.json();

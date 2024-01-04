@@ -3,14 +3,14 @@ import { IEvent } from "../db/event.interface";
 
 export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   // Validation for date types
-  let events: IEvent[] = [];
-  let recurringEventId = uuidv4();
+  const events: IEvent[] = [];
+  const recurringEventId = uuidv4();
 
   if (!eventData.repeatCycle || eventData.repeatCycle < 1) {
     eventData.repeatCycle = 1;
   }
 
-  let nextStartDate = new Date(eventData.startDate);
+  const nextStartDate = new Date(eventData.startDate);
   if (isNaN(nextStartDate.getTime())) {
     throw new Error("Invalid startDate provided.");
   }
@@ -36,12 +36,12 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
         date.setDate(date.getDate() + 7 * repeatCycle);
         break;
       case "monthly": {
-        let year = date.getFullYear();
-        let month = date.getMonth();
-        let day = date.getDate();
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
 
         // Determine the number of days in the current month
-        let daysInCurrentMonth = new Date(year, month + 1, 0).getDate();
+        const daysInCurrentMonth = new Date(year, month + 1, 0).getDate();
 
         // Add the number of days in the current month to the date
         date.setDate(day + daysInCurrentMonth);
@@ -92,8 +92,8 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   }
 
   while (nextStartDate < repeatEndDate) {
-    let eventEndDate = new Date(nextStartDate.getTime() + duration);
-    let eventId = uuidv4();
+    const eventEndDate = new Date(nextStartDate.getTime() + duration);
+    const eventId = uuidv4();
 
     events.push({
       ...eventData,
