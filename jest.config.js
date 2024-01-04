@@ -1,13 +1,13 @@
 export default {
-  preset: "ts-jest",
-  testEnvironment: "node",
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.json",
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',
     },
   },
-  setupFiles: ["./mocha-setup.js"],
+  setupFiles: ['./mocha-setup.js'],
   transform: {
-    "^.+\\.ts$": "ts-jest",
+    '^.+\\.ts$': 'ts-jest',
   },
 };

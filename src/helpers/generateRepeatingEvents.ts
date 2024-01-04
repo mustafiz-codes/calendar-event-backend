@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
-import { IEvent } from "../db/event.interface";
+import { v4 as uuidv4 } from 'uuid';
+import { IEvent } from '../db/event.interface';
 
 export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   // Validation for date types
@@ -12,14 +12,14 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
 
   const nextStartDate = new Date(eventData.startDate);
   if (isNaN(nextStartDate.getTime())) {
-    throw new Error("Invalid startDate provided.");
+    throw new Error('Invalid startDate provided.');
   }
 
   let nextEndDate: Date;
   if (eventData.endDate) {
     nextEndDate = new Date(eventData.endDate);
     if (isNaN(nextEndDate.getTime())) {
-      throw new Error("Invalid endDate provided.");
+      throw new Error('Invalid endDate provided.');
     }
   } else {
     nextEndDate = new Date(eventData.startDate);
@@ -29,13 +29,13 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
 
   const incrementDate = (date, repeat, repeatCycle) => {
     switch (repeat) {
-      case "daily":
+      case 'daily':
         date.setDate(date.getDate() + 1 * repeatCycle);
         break;
-      case "weekly":
+      case 'weekly':
         date.setDate(date.getDate() + 7 * repeatCycle);
         break;
-      case "monthly": {
+      case 'monthly': {
         const year = date.getFullYear();
         const month = date.getMonth();
         const day = date.getDate();
@@ -52,7 +52,7 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
         }
         break;
       }
-      case "yearly": {
+      case 'yearly': {
         const day = date.getDate();
         const month = date.getMonth();
 
@@ -71,7 +71,7 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
         }
         break;
       }
-      case "none":
+      case 'none':
         // No action needed for 'none'
         break;
       default:
@@ -81,7 +81,7 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
 
   // Determine the end date for repeating events
   let repeatEndDate;
-  if (eventData.repeat === "yearly") {
+  if (eventData.repeat === 'yearly') {
     repeatEndDate = new Date(
       nextStartDate.getFullYear() + 3,
       nextStartDate.getMonth(),
@@ -104,7 +104,7 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
       recurringEventId: recurringEventId,
     });
 
-    if (eventData.repeat !== "none") {
+    if (eventData.repeat !== 'none') {
       // Increment the date for repeated events
       incrementDate(nextStartDate, eventData.repeat, eventData.repeatCycle);
     } else {
@@ -113,7 +113,7 @@ export function generateRepeatingEvents(eventData: IEvent): IEvent[] {
   }
   const idSet = new Set(events.map((e) => e._id));
   if (idSet.size !== events.length) {
-    console.error("Duplicate IDs detected in generated events.");
+    console.error('Duplicate IDs detected in generated events.');
   }
 
   return events;

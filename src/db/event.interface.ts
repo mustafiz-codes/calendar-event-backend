@@ -9,6 +9,6 @@ export interface IEvent {
   isFullDay: boolean;
   startTime?: string;
   endTime?: string;
-  repeat: "none" | "daily" | "weekly" | "monthly" | "yearly";
+  repeat: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
   repeatCycle?: number;
 }

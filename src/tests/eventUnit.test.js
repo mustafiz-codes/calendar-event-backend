@@ -1,29 +1,29 @@
-import chai from "chai";
-import { describe, it, afterEach } from "mocha";
-import sinon from "sinon";
-import { v4 as uuidv4 } from "uuid";
-import sinonChai from "sinon-chai";
-import faker from "faker";
+import chai from 'chai';
+import { describe, it, afterEach } from 'mocha';
+import sinon from 'sinon';
+import { v4 as uuidv4 } from 'uuid';
+import sinonChai from 'sinon-chai';
+import faker from 'faker';
 
-import EventService from "../services/event.service";
-import { createEvent, getAllEvents } from "../controllers/event.controller";
+import EventService from '../services/event.service';
+import { createEvent, getAllEvents } from '../controllers/event.controller';
 
 chai.use(sinonChai);
 const { expect } = chai;
 
-describe("Event Controller Unit Tests", () => {
+describe('Event Controller Unit Tests', () => {
   afterEach(() => {
     sinon.restore();
   });
 
-  describe("createEvent", () => {
-    it("should create a new event and return status 201 with the new event", async () => {
+  describe('createEvent', () => {
+    it('should create a new event and return status 201 with the new event', async () => {
       const req = {
         body: {
           title: faker.lorem.words(),
-          startDate: "2024-01-02",
-          isFullDay: faker.datatype.boolean("true"),
-          repeat: "none",
+          startDate: '2024-01-02',
+          isFullDay: faker.datatype.boolean('true'),
+          repeat: 'none',
         },
       };
       const res = {
@@ -33,7 +33,7 @@ describe("Event Controller Unit Tests", () => {
       const newEvent = {
         // provide the new event data
       };
-      sinon.stub(EventService, "createEventService").resolves(newEvent);
+      sinon.stub(EventService, 'createEventService').resolves(newEvent);
 
       await createEvent(req, res);
 
@@ -42,35 +42,35 @@ describe("Event Controller Unit Tests", () => {
       expect(res.send).to.have.been.calledWith(newEvent);
     });
 
-    it("should handle errors and return status 500 with an error message", async () => {
+    it('should handle errors and return status 500 with an error message', async () => {
       const req = {
         body: {
           title: faker.lorem.words(),
-          startDate: "2024-01-02",
-          isFullDay: faker.datatype.boolean("true"),
-          repeat: "none",
+          startDate: '2024-01-02',
+          isFullDay: faker.datatype.boolean('true'),
+          repeat: 'none',
         },
       };
       const res = {
         status: sinon.stub().returnsThis(),
         send: sinon.stub(),
       };
-      const error = new Error("Some error message");
-      sinon.stub(EventService, "createEventService").rejects(error);
-      sinon.stub(console, "error");
+      const error = new Error('Some error message');
+      sinon.stub(EventService, 'createEventService').rejects(error);
+      sinon.stub(console, 'error');
       await createEvent(req, res);
       expect(EventService.createEventService).to.have.been.calledWith(req.body);
       expect(console.error).to.have.been.calledWith(
-        "Error in POST /events:",
+        'Error in POST /events:',
         error
       );
       expect(res.status).to.have.been.calledWith(500);
-      expect(res.send).to.have.been.calledWith("Error processing request");
+      expect(res.send).to.have.been.calledWith('Error processing request');
     });
   });
 
-  describe("getAllEvents", () => {
-    it("should get all events and return status 200 with the events", async () => {
+  describe('getAllEvents', () => {
+    it('should get all events and return status 200 with the events', async () => {
       const req = {};
       const res = {
         status: sinon.stub().returnsThis(),
@@ -80,12 +80,12 @@ describe("Event Controller Unit Tests", () => {
         {
           _id: uuidv4(),
           title: faker.lorem.words(),
-          startDate: "2024-01-02",
-          isFullDay: faker.datatype.boolean("true"),
-          repeat: "none",
+          startDate: '2024-01-02',
+          isFullDay: faker.datatype.boolean('true'),
+          repeat: 'none',
         },
       ];
-      sinon.stub(EventService, "getAllEventsService").resolves(events);
+      sinon.stub(EventService, 'getAllEventsService').resolves(events);
 
       await getAllEvents(req, res);
 
@@ -93,20 +93,20 @@ describe("Event Controller Unit Tests", () => {
       expect(res.send).to.have.been.calledWith(events);
     });
 
-    it("should handle errors and return status 500", async () => {
+    it('should handle errors and return status 500', async () => {
       const req = {};
       const res = {
         status: sinon.stub().returnsThis(),
         send: sinon.stub(),
       };
-      const error = new Error("Some error message");
-      sinon.stub(EventService, "getAllEventsService").rejects(error);
+      const error = new Error('Some error message');
+      sinon.stub(EventService, 'getAllEventsService').rejects(error);
 
       await getAllEvents(req, res);
 
       expect(EventService.getAllEventsService).to.have.been.called;
       expect(res.status).to.have.been.calledWith(500);
-      expect(res.send).to.have.been.calledWith("Error processing request");
+      expect(res.send).to.have.been.calledWith('Error processing request');
     });
   });
 });

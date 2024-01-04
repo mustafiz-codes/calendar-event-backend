@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import {
   createEvent,
   deleteEventById,
@@ -8,20 +8,20 @@ import {
   getEventsByRange,
   updateEventById,
   updateRecurringEvents,
-} from "../controllers/event.controller";
+} from '../controllers/event.controller';
 
 const router = express.Router();
 
-router.post("/", createEvent);
+router.post('/', createEvent);
 
-router.get("/", getAllEvents);
-router.get("/range", getEventsByRange);
-router.get("/:id", getEventById);
+router.get('/', getAllEvents);
+router.get('/range', getEventsByRange);
+router.get('/:id', getEventById);
 
-router.put("/:id", updateEventById);
-router.put("/recurring/:recurringEventId", updateRecurringEvents);
+router.put('/:id', updateEventById);
+router.put('/recurring/:recurringEventId', updateRecurringEvents);
 
-router.delete("/:id", deleteEventById);
-router.delete("/recurring/:recurringEventId", deleteRecurringEvents);
+router.delete('/:id', deleteEventById);
+router.delete('/recurring/:recurringEventId', deleteRecurringEvents);
 
 export default router;

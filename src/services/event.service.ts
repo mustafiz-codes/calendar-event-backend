@@ -1,12 +1,12 @@
-import { v4 as uuidv4 } from "uuid";
-import { generateRepeatingEvents } from "../../src/helpers/generateRepeatingEvents";
-import { IEvent } from "../db/event.interface";
-import EventModel from "../models/event.model";
+import { v4 as uuidv4 } from 'uuid';
+import { generateRepeatingEvents } from '../../src/helpers/generateRepeatingEvents';
+import { IEvent } from '../db/event.interface';
+import EventModel from '../models/event.model';
 
 export const createEventService = async (eventData: IEvent) => {
   eventData._id = uuidv4();
 
-  if (eventData.repeat !== "none") {
+  if (eventData.repeat !== 'none') {
     const events = generateRepeatingEvents(eventData);
     // Directly return the Promise
     return EventModel.insertMany(events);

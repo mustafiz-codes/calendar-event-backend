@@ -1,5 +1,5 @@
-import { Schema } from "mongoose";
-import { IEvent } from "./event.interface";
+import { Schema } from 'mongoose';
+import { IEvent } from './event.interface';
 
 const eventSchema = new Schema<IEvent>({
   _id: { type: String, required: true },
@@ -17,18 +17,18 @@ const eventSchema = new Schema<IEvent>({
   endTime: { type: String, required: false }, // Could be 'HH:mm' format
   repeat: {
     type: String,
-    enum: ["none", "daily", "weekly", "monthly", "yearly"],
-    default: "none",
+    enum: ['none', 'daily', 'weekly', 'monthly', 'yearly'],
+    default: 'none',
   },
   repeatCycle: {
     type: Number,
-    min: [1, "repeatCycle must be at least 1"], // Enforce minimum value of 1
+    min: [1, 'repeatCycle must be at least 1'], // Enforce minimum value of 1
     default: 1,
   }, // Used for biweekly, etc.
 });
 
 // Pre-save hook to format startDate and endDate
-eventSchema.pre<IEvent>("save", function (next) {
+eventSchema.pre<IEvent>('save', function (next) {
   if (this.startDate) {
     // Ensuring that the date is set at the start of the day in UTC
     this.startDate = new Date(this.startDate.setUTCHours(0, 0, 0, 0));
